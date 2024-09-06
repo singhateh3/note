@@ -26,7 +26,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($notes as $note)
-                                    @if (auth()->user()->id)
+                                    @if (auth()->user()->id === $note->user_id)
                                         <tr>
                                             <td class="py-2 px-4 border-b border-gray-300">{{ $note->title }}</td>
                                             <td class="py-2 px-4 border-b border-gray-300">
