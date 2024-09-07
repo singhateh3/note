@@ -6,12 +6,13 @@
     </x-slot>
 
     <div class="py-12">
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <form action="{{ route('note.update', $note->id) }}" method="POST">
                         @csrf
-                        @method('PUT')
+                        @method('PATCH')
                         <div class="mb-4">
                             <label for="title" class="block text-gray-700 font-bold mb-2">Title</label>
                             <input type="text" name="title" id="title" value="{{ $note->title }}"

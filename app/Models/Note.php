@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Note extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $fillable = ['title', 'content', 'user_id'];
 
     public function user(): BelongsTo
     {

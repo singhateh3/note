@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\noteStoreRequest;
+use App\Http\Requests\noteupdateRequest;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,16 +22,12 @@ class NoteController extends Controller
         return view('notes.create');
     }
 
-    public function store(Request $request)
+    public function store(noteStoreRequest $request)
     {
-        $validated = $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-
-        ]);
+        $validated = $request->validated();
         $validated['user_id'] = Auth::id();
         Note::create($validated);
-        return redirect()->route('notes.index');
+        return redirect()->route('notes.index')->with('success', 'Note created successfully');
     }
 
     public function show($id)
@@ -43,20 +41,17 @@ class NoteController extends Controller
         $note = Note::find($id);
         return view('notes.edit', compact('note'));
     }
-    public function update(Request $request, $id)
-    {
-        $validated = $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'user_id' => 'required||id'
 
-        ]);
+    public function update(noteupdateRequest $request, $id)
+    {
+        $validated = $request->validated();
+
         Note::find($id)->update($validated);
-        return redirect()->route('notes.index');
+        return redirect()->route('notes.index')->with('success', 'Note updated successfully');
     }
     public function destroy($id)
     {
         Note::find($id)->delete();
-        return redirect()->route('notes.index');
+        return redirect()->route('notes.index')->with('success', 'Note deleted successfully');
     }
 }
